@@ -7,14 +7,16 @@ import { ITEMS_PER_PAGE } from '../constants';
 import { renderQuota } from '../helpers/render';
 
 const COPY_OPTIONS = [
-  { key: 'next', text: 'ChatGPT Next Web', value: 'next' },
-  { key: 'ama', text: 'AMA 问天', value: 'ama' },
-  { key: 'opencat', text: 'OpenCat', value: 'opencat' },
+  { key: 'lobe', text: 'LobeChat', value: 'lobe' },
+  // { key: 'next', text: 'ChatGPT Next Web', value: 'next' },
+  // { key: 'ama', text: 'AMA 问天', value: 'ama' },
+  // { key: 'opencat', text: 'OpenCat', value: 'opencat' },
 ];
 
 const OPEN_LINK_OPTIONS = [
-  { key: 'ama', text: 'AMA 问天', value: 'ama' },
-  { key: 'opencat', text: 'OpenCat', value: 'opencat' },
+  { key: 'lobe', text: 'LobeChat', value: 'lobe' },
+  // { key: 'ama', text: 'AMA 问天', value: 'ama' },
+  // { key: 'opencat', text: 'OpenCat', value: 'opencat' },
 ];
 
 function renderTimestamp(timestamp) {
@@ -101,6 +103,15 @@ const TokensTable = () => {
       nextUrl = `https://chat.oneapi.pro/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     }
 
+    const lobeLink = localStorage.getItem('chat_link');
+    let lobeUrl;
+  
+    if (lobeLink) {
+      lobeUrl = lobeLink + `/?settings={openAI:{"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
+    } else {
+      lobeUrl = `https://chat.wecode.tech/#/?settings={"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}`;
+    }
+
     let url;
     switch (type) {
       case 'ama':
@@ -111,6 +122,9 @@ const TokensTable = () => {
         break;
       case 'next':
         url = nextUrl;
+        break;
+      case 'lobe':
+        url = lobeUrl;
         break;
       default:
         url = `sk-${key}`;
