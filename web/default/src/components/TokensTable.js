@@ -372,7 +372,7 @@ const TokensTable = () => {
                             size={'small'}
                             positive
                             onClick={() => {     
-                              onOpenLink('', token.key);       
+                              onOpenLink(OPEN_LINK_OPTIONS[0].value, token.key);       
                             }}>
                             聊天
                           </Button>
