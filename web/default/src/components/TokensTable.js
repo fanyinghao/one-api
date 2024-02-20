@@ -109,7 +109,7 @@ const TokensTable = () => {
     if (lobeLink) {
       lobeUrl = lobeLink + `/?settings={openAI:{"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
     } else {
-      lobeUrl = `https://chat.wecode.tech/#/?settings={"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}`;
+      lobeUrl = `https://chat.wecode.tech/?settings={"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}`;
     }
 
     let url;
@@ -349,7 +349,7 @@ const TokensTable = () => {
                           size={'small'}
                           positive
                           onClick={async () => {
-                            await onCopy('', token.key);
+                            await onCopy(OPEN_LINK_OPTIONS[0].value, token.key);
                           }}
                         >
                           复制
