@@ -107,7 +107,7 @@ const TokensTable = () => {
     let lobeUrl;
   
     if (lobeLink) {
-      lobeUrl = lobeLink + `/?settings={openAI:{"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
+      lobeUrl = lobeLink + `/?settings={"openAI":{"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
     } else {
       lobeUrl = `https://chat.wecode.tech/?settings={"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}`;
     }
@@ -170,6 +170,7 @@ const TokensTable = () => {
         break;
         
       case 'lobe': 
+        url = lobeLink;
         break
       default:
         url = lobeLink;
