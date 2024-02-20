@@ -149,13 +149,16 @@ const TokensTable = () => {
     }
     let encodedServerAddress = encodeURIComponent(serverAddress);
     const chatLink = localStorage.getItem('chat_link');
-    let defaultUrl;
+  
+    const lobeLink = localStorage.getItem('chat_link');
+    let lobeUrl;
   
     if (chatLink) {
-      defaultUrl = chatLink + `/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
+      lobeUrl = chatLink + `/?settings={openAI:{"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
     } else {
-      defaultUrl = `https://chat.oneapi.pro/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
+      lobeUrl = `https://chat.wecode.tech/?settings={"OPENAI_API_KEY":"sk-${key}","endpoint":"${serverAddress}/v1"}`;
     }
+
     let url;
     switch (type) {
       case 'ama':
@@ -166,8 +169,10 @@ const TokensTable = () => {
         url = `opencat://team/join?domain=${encodedServerAddress}&token=sk-${key}`;
         break;
         
+      case 'lobe': 
+        break
       default:
-        url = defaultUrl;
+        url = lobeLink;
     }
   
     window.open(url, '_blank');
@@ -349,7 +354,7 @@ const TokensTable = () => {
                           size={'small'}
                           positive
                           onClick={async () => {
-                            await onCopy(OPEN_LINK_OPTIONS[0].value, token.key);
+                            await onCopy('', token.key);
                           }}
                         >
                           复制
