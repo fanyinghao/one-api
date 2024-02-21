@@ -28,10 +28,10 @@ const COPY_OPTIONS = [
   {
     key: 'lobe',
     text: 'LobeChat',
-    url: 'https://chat.wecode.tech/?settings={"openAI":{"OPENAI_API_KEY":"sk-{key}","endpoint":"{serverAddress}"}}',
+    url: 'https://chat.wecode.tech/?settings={"openAI":{"OPENAI_API_KEY":"sk-{key}","endpoint":"{serverAddress}/v1"}}',
     encode: false
   },
-  { key: 'opencat', text: 'OpenCat', url: 'opencat://team/join?domain={serverAddress}&token=sk-{key}', encode: true }
+  { key: 'opencat', text: 'OpenCat', url: 'opencat://team/join?domain={serverAddress}v/1&token=sk-{key}', encode: true }
 ];
 
 function replacePlaceholders(text, key, serverAddress) {
@@ -132,7 +132,7 @@ export default function TokensTableRow({ item, manageToken, handleOpenModal, set
     let url = option.url;
 
     if (option.key === 'lobe' && siteInfo?.chat_link) {
-      url = siteInfo.chat_link + `/?settings={"openAI":{"OPENAI_API_KEY":"sk-{key}","endpoint":"{serverAddress}"}}`;
+      url = siteInfo.chat_link + `/?settings={"openAI":{"OPENAI_API_KEY":"sk-{key}","endpoint":"{serverAddress}/v1"}}`;
     }
 
     const key = item.key;
