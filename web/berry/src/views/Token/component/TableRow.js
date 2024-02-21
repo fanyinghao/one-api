@@ -26,12 +26,11 @@ import { IconDotsVertical, IconEdit, IconTrash, IconCaretDownFilled } from '@tab
 
 const COPY_OPTIONS = [
   {
-    key: 'next',
-    text: 'ChatGPT Next',
-    url: 'https://chat.oneapi.pro/#/?settings={"key":"sk-{key}","url":"{serverAddress}"}',
+    key: 'lobe',
+    text: 'LobeChat',
+    url: 'https://chat.wecode.tech/?settings={"openAI":{"OPENAI_API_KEY":"sk-{key}","endpoint":"{serverAddress}"}}',
     encode: false
   },
-  { key: 'ama', text: 'AMA 问天', url: 'ama://set-api-key?server={serverAddress}&key=sk-{key}', encode: true },
   { key: 'opencat', text: 'OpenCat', url: 'opencat://team/join?domain={serverAddress}&token=sk-{key}', encode: true }
 ];
 
@@ -132,8 +131,8 @@ export default function TokensTableRow({ item, manageToken, handleOpenModal, set
 
     let url = option.url;
 
-    if (option.key === 'next' && siteInfo?.chat_link) {
-      url = siteInfo.chat_link + `/#/?settings={"key":"sk-{key}","url":"{serverAddress}"}`;
+    if (option.key === 'lobe' && siteInfo?.chat_link) {
+      url = siteInfo.chat_link + `/?settings={"openAI":{"OPENAI_API_KEY":"sk-{key}","endpoint":"{serverAddress}"}}`;
     }
 
     const key = item.key;
