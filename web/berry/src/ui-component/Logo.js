@@ -1,5 +1,5 @@
 // material-ui
-import logo from 'assets/images/logo.svg';
+import logo from 'assets/images/logo.jpg';
 import { useSelector } from 'react-redux';
 
 /**
