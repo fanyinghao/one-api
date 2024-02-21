@@ -149,8 +149,6 @@ const TokensTable = () => {
     }
     let encodedServerAddress = encodeURIComponent(serverAddress);
     const chatLink = localStorage.getItem('chat_link');
-  
-    const lobeLink = localStorage.getItem('chat_link');
     let lobeUrl;
   
     if (chatLink) {
@@ -170,10 +168,10 @@ const TokensTable = () => {
         break;
         
       case 'lobe': 
-        url = lobeLink;
+        url = lobeUrl;
         break
       default:
-        url = lobeLink;
+        url = lobeUrl;
     }
   
     window.open(url, '_blank');
