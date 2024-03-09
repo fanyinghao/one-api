@@ -39,6 +39,7 @@ func RelayTextHelper(c *gin.Context) *model.ErrorWithStatusCode {
 	ratio := modelRatio * groupRatio
 	// pre-consume quota
 	promptTokens := getPromptTokens(textRequest, meta.Mode)
+	meta.PromptTokens = promptTokens
 	preConsumedQuota, bizErr := preConsumeQuota(ctx, textRequest, promptTokens, ratio, meta)
 	if bizErr != nil {
 		logger.Warnf(ctx, "preConsumeQuota failed: %+v", *bizErr)
@@ -54,7 +55,8 @@ func RelayTextHelper(c *gin.Context) *model.ErrorWithStatusCode {
 	var requestBody io.Reader
 	if meta.APIType == constant.APITypeOpenAI {
 		// no need to convert request for openai
-		if isModelMapped {
+		shouldResetRequestBody := isModelMapped || meta.ChannelType == common.ChannelTypeBaichuan // frequency_penalty 0 is not acceptable for baichuan
+		if shouldResetRequestBody {
 			jsonStr, err := json.Marshal(textRequest)
 			if err != nil {
 				return openai.ErrorWrapper(err, "json_marshal_failed", http.StatusInternalServerError)
