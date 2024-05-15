@@ -31,7 +31,12 @@ const COPY_OPTIONS = [
     url: 'https://chat.wecode.net.cn/?settings={"openAI":{"apiKey":"sk-{key}","endpoint":"{serverAddress}/v1"}}',
     encode: false
   },
-  { key: 'opencat', text: 'OpenCat', url: 'opencat://team/join?domain={serverAddress}v/1&token=sk-{key}', encode: true }
+  {
+    key: 'next',
+    text: 'ChatGPT Next',
+    url: 'https://ai.wecode.net.cn/#/?settings={"key":"sk-{key}","url":"{serverAddress}"}',
+    encode: false
+  },
 ];
 
 function replacePlaceholders(text, key, serverAddress) {

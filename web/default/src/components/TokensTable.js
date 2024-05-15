@@ -8,15 +8,14 @@ import { renderQuota } from '../helpers/render';
 
 const COPY_OPTIONS = [
   { key: 'lobe', text: 'LobeChat', value: 'lobe' },
-  // { key: 'next', text: 'ChatGPT Next Web', value: 'next' },
+  { key: 'next', text: 'ChatGPT Next Web', value: 'next' },
   // { key: 'ama', text: 'AMA 问天', value: 'ama' },
   // { key: 'opencat', text: 'OpenCat', value: 'opencat' },
 ];
 
 const OPEN_LINK_OPTIONS = [
-  { key: 'lobe', text: 'LobeChat', value: 'lobe' },
-  // { key: 'ama', text: 'AMA 问天', value: 'ama' },
-  // { key: 'opencat', text: 'OpenCat', value: 'opencat' },
+  { key: 'ama', text: 'AMA 问天', value: 'ama' },
+  { key: 'next', text: 'ChatGPT Next Web', value: 'next' },
 ];
 
 function renderTimestamp(timestamp) {
@@ -50,9 +49,10 @@ const TokensTable = () => {
   const [searching, setSearching] = useState(false);
   const [showTopUpModal, setShowTopUpModal] = useState(false);
   const [targetTokenIdx, setTargetTokenIdx] = useState(0);
+  const [orderBy, setOrderBy] = useState('');
 
   const loadTokens = async (startIdx) => {
-    const res = await API.get(`/api/token/?p=${startIdx}`);
+    const res = await API.get(`/api/token/?p=${startIdx}&order=${orderBy}`);
     const { success, message, data } = res.data;
     if (success) {
       if (startIdx === 0) {
@@ -72,7 +72,7 @@ const TokensTable = () => {
     (async () => {
       if (activePage === Math.ceil(tokens.length / ITEMS_PER_PAGE) + 1) {
         // In this case we have to load more data and then append them.
-        await loadTokens(activePage - 1);
+        await loadTokens(activePage - 1, orderBy);
       }
       setActivePage(activePage);
     })();
@@ -100,7 +100,7 @@ const TokensTable = () => {
     if (nextLink) {
       nextUrl = nextLink + `/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     } else {
-      nextUrl = `https://chat.oneapi.pro/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
+      nextUrl = `https://app.nextchat.dev/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     }
 
     const lobeLink = localStorage.getItem('chat_link');
@@ -154,7 +154,7 @@ const TokensTable = () => {
     if (chatLink) {
       lobeUrl = chatLink + `/?settings={"openAI":{"apiKey":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
     } else {
-      lobeUrl = `https://chat.wecode.net.cn/?settings={"openAI":{"apiKey":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
+      defaultUrl = `https://chat.oneapi.pro/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     }
 
     let url;
@@ -178,12 +178,12 @@ const TokensTable = () => {
   }
 
   useEffect(() => {
-    loadTokens(0)
+    loadTokens(0, orderBy)
       .then()
       .catch((reason) => {
         showError(reason);
       });
-  }, []);
+  }, [orderBy]);
 
   const manageToken = async (id, action, idx) => {
     let data = { id };
@@ -223,6 +223,7 @@ const TokensTable = () => {
       // if keyword is blank, load files instead.
       await loadTokens(0);
       setActivePage(1);
+      setOrderBy('');
       return;
     }
     setSearching(true);
@@ -259,6 +260,11 @@ const TokensTable = () => {
     }
     setTokens(sortedTokens);
     setLoading(false);
+  };
+
+  const handleOrderByChange = (e, { value }) => {
+    setOrderBy(value);
+    setActivePage(1);
   };
 
   return (
@@ -445,6 +451,18 @@ const TokensTable = () => {
                 添加新的令牌
               </Button>
               <Button size='small' onClick={refresh} loading={loading}>刷新</Button>
+              <Dropdown
+                placeholder='排序方式'
+                selection
+                options={[
+                  { key: '', text: '默认排序', value: '' },
+                  { key: 'remain_quota', text: '按剩余额度排序', value: 'remain_quota' },
+                  { key: 'used_quota', text: '按已用额度排序', value: 'used_quota' },
+                ]}
+                value={orderBy}
+                onChange={handleOrderByChange}
+                style={{ marginLeft: '10px' }}
+              />
               <Pagination
                 floated='right'
                 activePage={activePage}
