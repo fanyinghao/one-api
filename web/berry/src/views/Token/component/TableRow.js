@@ -28,13 +28,7 @@ const COPY_OPTIONS = [
   {
     key: 'lobe',
     text: 'LobeChat',
-    url: 'https://chat.wecode.net.cn/?settings={"openAI":{"apiKey":"sk-{key}","endpoint":"{serverAddress}/v1"}}',
-    encode: false
-  },
-  {
-    key: 'next',
-    text: 'ChatGPT Next',
-    url: 'https://ai.wecode.net.cn/#/?settings={"key":"sk-{key}","url":"{serverAddress}"}',
+    url: 'https://chat.wecode.net.cn/?settings={"keyVaults":{"openAI":{"apiKey":"sk-{key}","baseURL":"{serverAddress}/v1"}},"languageModel":{"openAI":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}',
     encode: false
   },
 ];

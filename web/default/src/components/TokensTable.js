@@ -107,9 +107,9 @@ const TokensTable = () => {
     let lobeUrl;
   
     if (lobeLink) {
-      lobeUrl = lobeLink + `/?settings={"openAI":{"apiKey":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
+      lobeUrl = lobeLink + `/?settings={"keyVaults":{"openAI":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openAI":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
     } else {
-      lobeUrl = `https://chat.wecode.net.cn/?settings={"openAI":{"apiKey":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
+      lobeUrl = `https://chat.wecode.net.cn/?settings={"keyVaults":{"openAI":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openAI":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
     }
 
     let url;
