@@ -152,7 +152,7 @@ const TokensTable = () => {
     let lobeUrl;
   
     if (chatLink) {
-      lobeUrl = chatLink + `/?settings={"openAI":{"apiKey":"sk-${key}","endpoint":"${serverAddress}/v1"}}`;
+      lobeUrl = chatLink + `/?settings={"keyVaults":{"openAI":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openAI":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
     } else {
       defaultUrl = `https://chat.oneapi.pro/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     }
