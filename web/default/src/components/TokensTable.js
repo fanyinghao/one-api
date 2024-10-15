@@ -9,13 +9,14 @@ import { renderQuota } from '../helpers/render';
 const COPY_OPTIONS = [
   { key: 'lobe', text: 'LobeChat', value: 'lobe' },
   { key: 'next', text: 'ChatGPT Next Web', value: 'next' },
-  // { key: 'ama', text: 'AMA 问天', value: 'ama' },
-  // { key: 'opencat', text: 'OpenCat', value: 'opencat' },
 ];
 
 const OPEN_LINK_OPTIONS = [
   { key: 'ama', text: 'AMA 问天', value: 'ama' },
   { key: 'next', text: 'ChatGPT Next Web', value: 'next' },
+  { key: 'ama', text: 'BotGem', value: 'ama' },
+  { key: 'opencat', text: 'OpenCat', value: 'opencat' },
+  { key: 'lobechat', text: 'LobeChat', value: 'lobechat' },
 ];
 
 function renderTimestamp(timestamp) {
@@ -123,9 +124,6 @@ const TokensTable = () => {
       case 'next':
         url = nextUrl;
         break;
-      case 'lobe':
-        url = lobeUrl;
-        break;
       default:
         url = `sk-${key}`;
     }
@@ -167,9 +165,6 @@ const TokensTable = () => {
         url = `opencat://team/join?domain=${encodedServerAddress}&token=sk-${key}`;
         break;
         
-      case 'lobe': 
-        url = lobeUrl;
-        break
       default:
         url = lobeUrl;
     }

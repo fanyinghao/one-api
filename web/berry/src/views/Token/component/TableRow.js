@@ -28,9 +28,9 @@ const COPY_OPTIONS = [
   {
     key: 'lobe',
     text: 'LobeChat',
-    url: 'https://chat.wecode.net.cn/?settings={"keyVaults":{"openAI":{"apiKey":"sk-{key}","baseURL":"{serverAddress}/v1"}},"languageModel":{"openAI":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}',
-    encode: false
-  },
+    url: 'https://chat.wecode.net.cn/?settings={"keyVaults":{"openai":{"apiKey":"user-key","baseURL":"https://your-proxy.com/v1"}}}',
+    encode: true
+  }
 ];
 
 function replacePlaceholders(text, key, serverAddress) {
