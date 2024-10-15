@@ -108,9 +108,9 @@ const TokensTable = () => {
     let lobeUrl;
   
     if (lobeLink) {
-      lobeUrl = lobeLink + `/?settings={"keyVaults":{"openAI":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openAI":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
+      lobeUrl = lobeLink + `/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openai":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
     } else {
-      lobeUrl = `https://chat.wecode.net.cn/?settings={"keyVaults":{"openAI":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openAI":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
+      lobeUrl = `https://chat.wecode.net.cn/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openai":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
     }
 
     let url;
@@ -150,7 +150,7 @@ const TokensTable = () => {
     let lobeUrl;
   
     if (chatLink) {
-      lobeUrl = chatLink + `/?settings={"keyVaults":{"openAI":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openAI":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
+      lobeUrl = chatLink + `/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openai":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
     } else {
       defaultUrl = `https://chat.oneapi.pro/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     }

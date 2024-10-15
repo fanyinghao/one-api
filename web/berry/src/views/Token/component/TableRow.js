@@ -131,7 +131,7 @@ export default function TokensTableRow({ item, manageToken, handleOpenModal, set
     let url = option.url;
 
     if (option.key === 'lobe' && siteInfo?.chat_link) {
-      url = siteInfo.chat_link + `/?settings={"keyVaults":{"openAI":{"apiKey":"sk-{key}","baseURL":"{serverAddress}/v1"}},"languageModel":{"openAI":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
+      url = siteInfo.chat_link + `/?settings={"keyVaults":{"openai":{"apiKey":"sk-{key}","baseURL":"{serverAddress}/v1"}},"languageModel":{"openai":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
     }
 
     const key = item.key;
