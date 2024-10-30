@@ -115,14 +115,8 @@ const TokensTable = () => {
 
     let url;
     switch (type) {
-      case 'ama':
-        url = `ama://set-api-key?server=${encodedServerAddress}&key=sk-${key}`;
-        break;
-      case 'opencat':
-        url = `opencat://team/join?domain=${encodedServerAddress}&token=sk-${key}`;
-        break;
-      case 'next':
-        url = nextUrl;
+      case 'lobechat':
+        url = nextLink + `/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}"/v1"}}}`;
         break;
       default:
         url = `sk-${key}`;
@@ -157,14 +151,10 @@ const TokensTable = () => {
 
     let url;
     switch (type) {
-      case 'ama':
-        url = `ama://set-api-key?server=${encodedServerAddress}&key=sk-${key}`;
+      case 'lobechat':
+        url = chatLink + `/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}"/v1"}}}`;
         break;
-  
-      case 'opencat':
-        url = `opencat://team/join?domain=${encodedServerAddress}&token=sk-${key}`;
-        break;
-        
+
       default:
         url = lobeUrl;
     }
