@@ -25,7 +25,7 @@ import { renderQuota, timestamp2string, copy } from 'utils/common';
 import { IconDotsVertical, IconEdit, IconTrash, IconCaretDownFilled } from '@tabler/icons-react';
 
 const COPY_OPTIONS = [
-  { key: 'lobechat', text: 'WecodeChat', url: 'https://chat.wecode.net.cn/?settings={"keyVaults":{"openai":{"apiKey":"sk-{key}","baseURL":"{serverAddress}"}}}', encode: true }
+  { key: 'lobechat', text: 'WecodeChat', url: 'https://chat.wecode.net.cn/?settings={"keyVaults":{"openai":{"apiKey":"sk-{key}","baseURL":"{serverAddress}/v1"}}}', encode: true }
 ];
 
 function replacePlaceholders(text, key, serverAddress) {
