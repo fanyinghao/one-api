@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/songquanpeng/one-api/common/config"
 	"github.com/songquanpeng/one-api/common/helper"
 	channelhelper "github.com/songquanpeng/one-api/relay/adaptor"
 	"github.com/songquanpeng/one-api/relay/adaptor/openai"
@@ -24,7 +23,15 @@ func (a *Adaptor) Init(meta *meta.Meta) {
 }
 
 func (a *Adaptor) GetRequestURL(meta *meta.Meta) (string, error) {
-	version := helper.AssignOrDefault(meta.Config.APIVersion, config.GeminiVersion)
+	var defaultVersion string
+	switch meta.ActualModelName {
+	case "gemini-2.0-flash-exp",
+		"gemini-2.0-flash-thinking-exp",
+		"gemini-2.0-flash-thinking-exp-01-21":
+		defaultVersion = "v1beta"
+	}
+
+	version := helper.AssignOrDefault(meta.Config.APIVersion, defaultVersion)
 	action := ""
 	switch meta.Mode {
 	case relaymode.Embeddings:
@@ -36,6 +43,7 @@ func (a *Adaptor) GetRequestURL(meta *meta.Meta) (string, error) {
 	if meta.IsStream {
 		action = "streamGenerateContent?alt=sse"
 	}
+
 	return fmt.Sprintf("%s/%s/models/%s:%s", meta.BaseURL, version, meta.ActualModelName, action), nil
 }
 

@@ -1,7 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Dropdown, Form, Label, Pagination, Popup, Table } from 'semantic-ui-react';
+import {
+  Button,
+  Dropdown,
+  Form,
+  Label,
+  Pagination,
+  Popup,
+  Table,
+} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { API, copy, showError, showSuccess, showWarning, timestamp2string } from '../helpers';
+import {
+  API,
+  copy,
+  showError,
+  showSuccess,
+  showWarning,
+  timestamp2string,
+} from '../helpers';
 
 import { ITEMS_PER_PAGE } from '../constants';
 import { renderQuota } from '../helpers/render';
@@ -20,25 +35,45 @@ const OPEN_LINK_OPTIONS = [
 ];
 
 function renderTimestamp(timestamp) {
-  return (
-    <>
-      {timestamp2string(timestamp)}
-    </>
-  );
+  return <>{timestamp2string(timestamp)}</>;
 }
 
 function renderStatus(status) {
   switch (status) {
     case 1:
-      return <Label basic color='green'>已启用</Label>;
+      return (
+        <Label basic color='green'>
+          已启用
+        </Label>
+      );
     case 2:
-      return <Label basic color='red'> 已禁用 </Label>;
+      return (
+        <Label basic color='red'>
+          {' '}
+          已禁用{' '}
+        </Label>
+      );
     case 3:
-      return <Label basic color='yellow'> 已过期 </Label>;
+      return (
+        <Label basic color='yellow'>
+          {' '}
+          已过期{' '}
+        </Label>
+      );
     case 4:
-      return <Label basic color='grey'> 已耗尽 </Label>;
+      return (
+        <Label basic color='grey'>
+          {' '}
+          已耗尽{' '}
+        </Label>
+      );
     default:
-      return <Label basic color='black'> 未知状态 </Label>;
+      return (
+        <Label basic color='black'>
+          {' '}
+          未知状态{' '}
+        </Label>
+      );
   }
 }
 
@@ -97,9 +132,10 @@ const TokensTable = () => {
     let encodedServerAddress = encodeURIComponent(serverAddress);
     const nextLink = localStorage.getItem('chat_link');
     let nextUrl;
-  
+
     if (nextLink) {
-      nextUrl = nextLink + `/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
+      nextUrl =
+        nextLink + `/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     } else {
       nextUrl = `https://app.nextchat.dev/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     }
@@ -116,7 +152,9 @@ const TokensTable = () => {
     let url;
     switch (type) {
       case 'lobechat':
-        url = nextLink + `/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}"/v1"}}}`;
+        url =
+          nextLink +
+          `/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}}}`;
         break;
       default:
         url = `sk-${key}`;
@@ -134,33 +172,44 @@ const TokensTable = () => {
     let serverAddress = '';
     if (status) {
       status = JSON.parse(status);
-      serverAddress = status.server_address; 
+      serverAddress = status.server_address;
     }
     if (serverAddress === '') {
       serverAddress = window.location.origin;
     }
     let encodedServerAddress = encodeURIComponent(serverAddress);
     const chatLink = localStorage.getItem('chat_link');
-    let lobeUrl;
-  
+    let defaultUrl;
+
     if (chatLink) {
-      lobeUrl = chatLink + `/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}},"languageModel":{"openai":{"autoFetchModelLists":true,"enabled":true,"fetchOnClient":true}}}`;
+      defaultUrl =
+        chatLink + `/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     } else {
       defaultUrl = `https://chat.oneapi.pro/#/?settings={"key":"sk-${key}","url":"${serverAddress}"}`;
     }
 
     let url;
     switch (type) {
+      case 'ama':
+        url = `ama://set-api-key?server=${encodedServerAddress}&key=sk-${key}`;
+        break;
+
+      case 'opencat':
+        url = `opencat://team/join?domain=${encodedServerAddress}&token=sk-${key}`;
+        break;
+
       case 'lobechat':
-        url = chatLink + `/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}"/v1"}}}`;
+        url =
+          chatLink +
+          `/?settings={"keyVaults":{"openai":{"apiKey":"sk-${key}","baseURL":"${serverAddress}/v1"}}}`;
         break;
 
       default:
         url = lobeUrl;
     }
-  
+
     window.open(url, '_blank');
-  }
+  };
 
   useEffect(() => {
     loadTokens(0, orderBy)
@@ -266,7 +315,7 @@ const TokensTable = () => {
         />
       </Form>
 
-      <Table basic compact size='small'>
+      <Table basic={'very'} compact size='small'>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell
@@ -334,12 +383,20 @@ const TokensTable = () => {
                   <Table.Cell>{token.name ? token.name : '无'}</Table.Cell>
                   <Table.Cell>{renderStatus(token.status)}</Table.Cell>
                   <Table.Cell>{renderQuota(token.used_quota)}</Table.Cell>
-                  <Table.Cell>{token.unlimited_quota ? '无限制' : renderQuota(token.remain_quota, 2)}</Table.Cell>
+                  <Table.Cell>
+                    {token.unlimited_quota
+                      ? '无限制'
+                      : renderQuota(token.remain_quota, 2)}
+                  </Table.Cell>
                   <Table.Cell>{renderTimestamp(token.created_time)}</Table.Cell>
-                  <Table.Cell>{token.expired_time === -1 ? '永不过期' : renderTimestamp(token.expired_time)}</Table.Cell>
+                  <Table.Cell>
+                    {token.expired_time === -1
+                      ? '永不过期'
+                      : renderTimestamp(token.expired_time)}
+                  </Table.Cell>
                   <Table.Cell>
                     <div>
-                    <Button.Group color='green' size={'small'}>
+                      <Button.Group color='green' size={'small'}>
                         <Button
                           size={'small'}
                           positive
@@ -352,38 +409,37 @@ const TokensTable = () => {
                         <Dropdown
                           className='button icon'
                           floating
-                          options={COPY_OPTIONS.map(option => ({
+                          options={COPY_OPTIONS.map((option) => ({
                             ...option,
                             onClick: async () => {
                               await onCopy(option.value, token.key);
-                            }
+                            },
                           }))}
                           trigger={<></>}
                         />
-                      </Button.Group>
-                      {' '}
+                      </Button.Group>{' '}
                       <Button.Group color='blue' size={'small'}>
                         <Button
-                            size={'small'}
-                            positive
-                            onClick={() => {     
-                              onOpenLink(OPEN_LINK_OPTIONS[0].value, token.key);       
-                            }}>
-                            聊天
-                          </Button>
-                          <Dropdown   
-                            className="button icon"       
-                            floating
-                            options={OPEN_LINK_OPTIONS.map(option => ({
-                              ...option,
-                              onClick: async () => {
-                                await onOpenLink(option.value, token.key);
-                              }
-                            }))}       
-                            trigger={<></>}   
-                          />
-                      </Button.Group>
-                      {' '}
+                          size={'small'}
+                          positive
+                          onClick={() => {
+                            onOpenLink('', token.key);
+                          }}
+                        >
+                          聊天
+                        </Button>
+                        <Dropdown
+                          className='button icon'
+                          floating
+                          options={OPEN_LINK_OPTIONS.map((option) => ({
+                            ...option,
+                            onClick: async () => {
+                              await onOpenLink(option.value, token.key);
+                            },
+                          }))}
+                          trigger={<></>}
+                        />
+                      </Button.Group>{' '}
                       <Popup
                         trigger={
                           <Button size='small' negative>
@@ -435,14 +491,24 @@ const TokensTable = () => {
               <Button size='small' as={Link} to='/token/add' loading={loading}>
                 添加新的令牌
               </Button>
-              <Button size='small' onClick={refresh} loading={loading}>刷新</Button>
+              <Button size='small' onClick={refresh} loading={loading}>
+                刷新
+              </Button>
               <Dropdown
                 placeholder='排序方式'
                 selection
                 options={[
                   { key: '', text: '默认排序', value: '' },
-                  { key: 'remain_quota', text: '按剩余额度排序', value: 'remain_quota' },
-                  { key: 'used_quota', text: '按已用额度排序', value: 'used_quota' },
+                  {
+                    key: 'remain_quota',
+                    text: '按剩余额度排序',
+                    value: 'remain_quota',
+                  },
+                  {
+                    key: 'used_quota',
+                    text: '按已用额度排序',
+                    value: 'used_quota',
+                  },
                 ]}
                 value={orderBy}
                 onChange={handleOrderByChange}
